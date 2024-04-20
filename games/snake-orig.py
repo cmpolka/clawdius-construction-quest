@@ -1,6 +1,6 @@
+
 import random
 import pygame
-import sys
 
 WIDTH = 500
 ROWS = 20
@@ -52,7 +52,6 @@ class Snake:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                sys.exit()
 
             keys = pygame.key.get_pressed()  # see which keys are being pressed
 
@@ -67,7 +66,7 @@ class Snake:
                 self.turns[self.head.pos] = [0, 1]
 
     def move(self):
-        #self.get_input()
+        self.get_input()
 
         for i, cube, in enumerate(self.body):
             p = cube.pos
@@ -158,33 +157,8 @@ def main():
     snake = Snake(SNAKE_COL, (10, 10))
     snack = Cube(random_snack(snake), color=SNACK_COL)
 
-    won = False
-    run = True
-    while run:
+    while True:
         pygame.time.delay(80)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                won = False
-                run = False
-                pygame.quit()
-                sys.exit()
-
-            keys = pygame.key.get_pressed()  # see which keys are being pressed
-
-            if keys[pygame.K_q]:
-                won = False
-                run = False
-            elif keys[pygame.K_LEFT]:
-                # mark this space on the board with how the body should turn
-                snake.turns[snake.head.pos] = [-1, 0]
-            elif keys[pygame.K_RIGHT]:
-                snake.turns[snake.head.pos] = [1, 0]
-            elif keys[pygame.K_UP]:
-                snake.turns[snake.head.pos] = [0, -1]
-            elif keys[pygame.K_DOWN]:
-                snake.turns[snake.head.pos] = [0, 1]
-
         snake.move()
 
         head_pos = snake.head.pos
@@ -202,10 +176,8 @@ def main():
             snake.add_cube()
             snack = Cube(random_snack(snake), color=SNACK_COL)
 
-        if len(snake.body) == 5:
-            won = True
-            run = False
-
         redraw_surface(surface, snake, snack)
 
-    return won
+
+if __name__ == '__main__':
+    main()
