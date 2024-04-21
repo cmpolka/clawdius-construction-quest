@@ -1,15 +1,7 @@
 import pygame
 from games import snake
 from enum import Enum
-
-
-
-class Minigames(Enum):
-    """ Corresponds to game state indeces. """
-    YATES = 0
-    MONROE = 1
-    ISC = 2
-    LEMON = 3
+from constants import *
 
 class Minigame:
 
