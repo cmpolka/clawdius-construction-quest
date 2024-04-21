@@ -38,16 +38,6 @@ class Minigame:
                 pass
     
 
-    # def minigame_title_screen(self, minigame):
-    #     #screen = pygame.display.init()
-    #     rect = pygame.Rect(150, 30, 500, 500)
-    #     screen = pygame.display.set_mode(size=(800, 560))
-    #     print(minigame)
-    #     minigame.fill((255, 255, 255), rect)
-    #     pygame.display.update()
-    #     pygame.time.delay(3000)
-    #     return self.play_snake(minigame, rect)
-
     def minigame_title_screen(self,minigame:str):
         screen = pygame.display.init()
         rect = pygame.Rect(150,30,500,500)
@@ -57,12 +47,14 @@ class Minigame:
             
         menu_text = minigame
         font = pygame.font.init()
-        font = pygame.font.SysFont('Helvetica',size = 20)
+        font = pygame.font.Font('./resources/PressStart2P-Regular.ttf',size = 50)
         MENU_TEXT = font.render(menu_text, True, (0,0,0))
-        MENU_RECT = MENU_TEXT.get_rect(center=(400,100))
+        MENU_RECT = MENU_TEXT.get_rect(center=(400,150))
         
         screen.blit(MENU_TEXT,MENU_RECT)
         
+        font = pygame.font.init()
+        font = pygame.font.Font('./resources/PressStart2P-Regular.ttf',size = 10)
         exit_button_surface = pygame.Surface((150,50))
         exit_text = font.render("Quit Game",True,(0,0,0))
         exit_text_rect = exit_text.get_rect(center=(exit_button_surface.get_width()/2,exit_button_surface.get_height()/2))
@@ -80,7 +72,7 @@ class Minigame:
         run = True
         while run:
             clock.tick(60)
-            screen.fill((255,255,255))
+            screen.fill((204,0,0))
             for event in pygame.event.get():  
                 if event.type == pygame.QUIT:
                     screen.display.quit()
@@ -90,7 +82,6 @@ class Minigame:
                         if won:
                             run = False
                             break
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if exit_button_rect.collidepoint(event.pos):
                         run = False
                         break
