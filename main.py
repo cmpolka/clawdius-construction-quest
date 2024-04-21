@@ -35,10 +35,10 @@ def png_to_render(state):
 
     # Get int value of game state by treating the values in the
     # list as a binary string
-    lemon = state[0]
-    isc = state[1] * 2
-    monroe = state[2] * 4
-    yates = state[3] * 8
+    yates = state[0] * 8
+    monroe = state[1] * 4
+    isc = state[2] * 2
+    lemon = state[3]
 
     png = yates + monroe + isc + lemon
 
