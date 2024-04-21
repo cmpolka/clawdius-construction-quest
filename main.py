@@ -14,8 +14,7 @@ def update_view(window, rerender_map, clawdius, game_state):
     window.blit(MONROE,(655,157)) if game_state[1] == 1 else window.blit(RUBBLE,(655,157))
     window.blit(ISC,(345,397)) if game_state[2] == 1 else window.blit(RUBBLE,(345,397))
     window.blit(LEMON,(513,465)) if game_state[3] == 1 else window.blit(RUBBLE,(513,465))
-    window.blit(CLAWDIUS,(clawdius.x, clawdius.y))
-    #clawdius.draw(window)
+    clawdius.draw(window)
     pygame.display.update()
 
 
