@@ -30,18 +30,17 @@ if __name__ == "__main__":
     #png = BASE_IMG       # TODO REPLACE WITH REAL MAP PNG NAMES
     rerender_map = True     # Window may get resized by minigames
 
+    pygame.key.set_repeat(10, 60)   # Allow keys to be repeated for movement
     run = True
     while run:
-        pygame.time.delay(50)   # wait 50ms between each game loop
+        #pygame.time.delay(50)   # wait 50ms between each game loop
 
         for event in pygame.event.get():
-
             keys = pygame.key.get_pressed()
 
             if keys[pygame.K_q] or event.type == pygame.QUIT:
                 run = False
-                pygame.quit()
-                sys.exit()
+                break
             elif keys[pygame.K_LEFT]:
                 clawdius.move(Direction.LEFT)
             elif keys[pygame.K_RIGHT]:
@@ -62,6 +61,9 @@ if __name__ == "__main__":
         
         update_view(window, rerender_map, clawdius, game_state)
         rerender_map = False
+    
+    pygame.quit()
+    sys.exit()
 
             
 
