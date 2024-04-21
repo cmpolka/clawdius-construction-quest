@@ -28,13 +28,13 @@ class Minigame:
         match minigame:
             case Minigames.YATES.value:
                 # Play minigame 1
-                return self.minigame_title_screen(game='Snake Game',func = self.play_snake())
+                return self.minigame_title_screen('Snake Game', minigame)
             case Minigames.MONROE.value:
                 # Play minigame 2
-                return self.minigame_title_screen(game='Connect Four',func = self.play_connect4())
+                return self.minigame_title_screen('Connect Four', minigame)
             case Minigames.ISC.value:
                 # Play minigame 3
-                return self.minigame_title_screen(game='Flappy Clawd',func = self.play_flappy_clawd())
+                return self.minigame_title_screen('Flappy Clawd', minigame)
             case Minigames.LEMON.value:
                 # Play minigame 4
                 return self.play_simon()
@@ -43,12 +43,11 @@ class Minigame:
     
 
 
-    def minigame_title_screen(self,game:str,func):
+    def minigame_title_screen(self,game:str, minigame):
         screen = pygame.display.init()
         rect = pygame.Rect(150,30,500,500)
         screen = pygame.display.set_mode(size=(800,560))
         pygame.display.update()
-            
             
         menu_text = game
         font = pygame.font.init()
@@ -81,7 +80,20 @@ class Minigame:
                     screen.display.quit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if start_button_rect.collidepoint(event.pos):
-                        won = func
+                        match minigame:
+                            case Minigames.YATES.value:
+                                # Play minigame 1
+                                won = self.play_snake()
+                            case Minigames.MONROE.value:
+                                # Play minigame 2
+                                won = self.play_connect4()
+                            case Minigames.ISC.value:
+                                # Play minigame 3
+                                won = self.play_flappy_clawd()
+                            case Minigames.LEMON.value:
+                                # Play minigame 4
+                                won = self.play_simon()
+                                pass
                         if won:
                             run = False
                             break
