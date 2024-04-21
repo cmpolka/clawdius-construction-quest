@@ -6,8 +6,16 @@ from logic import Logic
 
 WIN_WIDTH = 800
 WIN_HEIGHT = 560
+NEW_SIZE = (76,68)
 
-#BASE_IMG = pygame.image.load(os.path.join("map", "base.png"))
+#Loading in png files and resizing building/rubble icons
+BASE_IMG = pygame.image.load(os.path.join("map", "base.png"))
+YATES = pygame.transform.scale(pygame.image.load(os.path.join("resources","yates.png")),NEW_SIZE)
+MONROE = pygame.transform.scale(pygame.image.load(os.path.join("resources","monroe.png")),NEW_SIZE)
+ISC = pygame.transform.scale(pygame.image.load(os.path.join("resources","isc.png")),NEW_SIZE)
+LEMON = pygame.transform.scale(pygame.image.load(os.path.join("resources","lemon.png")),NEW_SIZE)
+RUBBLE = pygame.transform.scale(pygame.image.load(os.path.join("resources","rubble.png")),NEW_SIZE)
+
 IMGS = {
     0:  pygame.image.load("map/base.png"),
     8: pygame.image.load("map/base.png")    # TODO delete
@@ -70,11 +78,14 @@ def png_to_render(state):
     return IMGS.get(png)
         
 
-def update_view(window, resized, map, clawdius):
+def update_view(window, resized, BASE_IMG, clawdius,game_state):
     if resized:
         pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
-    window.blit(map, (0, 0))
-    # TODO implement
+    window.blit(BASE_IMG, (0, 0))
+    pygame.blit(YATES,(100,105)) if game_state[0]== 1 else pygame.blit(RUBBLE,(100,105))
+    pygame.blit(MONROE,(655,157)) if game_state[1] == 1 else pygame.blit(RUBBLE,(655,157))
+    pygame.blit(ISC,(345,397)) if game_state[2] == 1 else pygame.blit(RUBBLE,(345,397))
+    pygame.blit(LEMON,(513,465)) if game_state[3] == 1 else pygame.blit(RUBBLE,(513,465))
     clawdius.draw(window)
     pygame.display.update()
 
