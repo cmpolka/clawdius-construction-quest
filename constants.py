@@ -19,7 +19,7 @@ class Direction(Enum):
 WIN_WIDTH = 800
 WIN_HEIGHT = 560
 NEW_SIZE = (76,68)
-CLAWD_W = 60
+CLAWD_W = 50
 
 # Images
 BASE_IMG = pygame.image.load(os.path.join("map", "base.png"))
