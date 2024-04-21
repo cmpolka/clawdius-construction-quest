@@ -2,6 +2,7 @@ import pygame
 import sys
 from main import * 
 from clawdius import *
+sys.path.append("games/flappy_clawd")
 import flappy_clawd
 from games import snake
 from games import connect4
@@ -28,36 +29,27 @@ class Minigame:
         match minigame:
             case Minigames.YATES.value:
                 # Play minigame 1
-                return self.minigame_title_screen('Snake Game')
+                return self.minigame_title_screen(game='Snake Game',func = self.play_snake())
             case Minigames.MONROE.value:
                 # Play minigame 2
-                return self.play_connect4()
+                return self.minigame_title_screen(game='Connect Four',func = self.play_connect4())
             case Minigames.ISC.value:
                 # Play minigame 3
-                return self.play_flappy_clawd()
+                return self.minigame_title_screen(game='Flappy Clawd',func = self.play_flappy_clawd())
             case Minigames.LEMON.value:
                 # Play minigame 4
                 pass
     
 
-    # def minigame_title_screen(self, minigame):
-    #     #screen = pygame.display.init()
-    #     rect = pygame.Rect(150, 30, 500, 500)
-    #     screen = pygame.display.set_mode(size=(800, 560))
-    #     print(minigame)
-    #     minigame.fill((255, 255, 255), rect)
-    #     pygame.display.update()
-    #     pygame.time.delay(3000)
-    #     return self.play_snake(minigame, rect)
 
-    def minigame_title_screen(self,minigame:str):
+    def minigame_title_screen(self,game:str,func):
         screen = pygame.display.init()
         rect = pygame.Rect(150,30,500,500)
         screen = pygame.display.set_mode(size=(800,560))
         pygame.display.update()
             
             
-        menu_text = minigame
+        menu_text = game
         font = pygame.font.init()
         font = pygame.font.SysFont('Helvetica',size = 20)
         MENU_TEXT = font.render(menu_text, True, (0,0,0))
@@ -86,13 +78,12 @@ class Minigame:
             for event in pygame.event.get():  
                 if event.type == pygame.QUIT:
                     screen.display.quit()
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     if start_button_rect.collidepoint(event.pos):
-                        won = self.play_snake()
+                        won = func
                         if won:
                             run = False
                             break
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     if exit_button_rect.collidepoint(event.pos):
                         run = False
                         break
