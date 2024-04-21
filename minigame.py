@@ -1,8 +1,10 @@
 import pygame
 import sys
 from main import * 
-from games import snake
 from clawdius import *
+import flappy_clawd
+from games import snake
+from games import connect4
 from enum import Enum
 from constants import *
 
@@ -29,10 +31,10 @@ class Minigame:
                 return self.minigame_title_screen('Snake Game')
             case Minigames.MONROE.value:
                 # Play minigame 2
-                pass
+                return self.play_connect4()
             case Minigames.ISC.value:
                 # Play minigame 3
-                pass
+                return self.play_flappy_clawd()
             case Minigames.LEMON.value:
                 # Play minigame 4
                 pass
@@ -133,4 +135,19 @@ class Minigame:
         # TODO add loading screen
 
         won = snake.main()
+        return won
+
+
+    def play_flappy_clawd(self):
+        """Plays flappy bird (clawd) minigame.
+        
+        Returns:
+            True if the user reaches a score of 10,
+            false if the player quits the game.
+        """
+        won = flappy_clawd.main()
+        return won
+    
+    def play_connect4(self):
+        won = connect4.main()
         return won

@@ -1,6 +1,7 @@
 import random
 import pygame
 import sys
+import os
 
 WIDTH = 500
 ROWS = 20
@@ -9,7 +10,12 @@ SURFACE_COL = (0, 0, 0)
 GRID_COL = (255, 255, 255)
 SNAKE_COL = (255, 0, 255)
 SNACK_COL = (0, 255, 0)
+SCORE_COL = (255, 0, 0)
 
+CLAWDIUS_SNAKE = pygame.transform.scale(pygame.image.load(os.path.join("resources", "clawdius_pink.png")), (WIDTH//ROWS, WIDTH//ROWS))
+
+pygame.font.init()
+STAT_FONT = pygame.font.SysFont("comicsans", 18)
 
 class Cube:
     def __init__(self, start, dirx=1, diry=0, color=SNAKE_COL):
@@ -28,15 +34,11 @@ class Cube:
         i = self.pos[0]
         j = self.pos[1]
 
-        pygame.draw.rect(surface, self.color, (i * dis + 1, j * dis + 1, dis - 1, dis - 2))
-
+        rect = pygame.Rect(i * dis + 1, j * dis + 1, dis - 1, dis - 2)
         if head:
-            centre = dis // 2
-            radius = 3
-            circleMiddle = (i * dis + centre - radius, j * dis + 8)
-            circleMiddle2 = (i * dis + dis - radius * 2, j * dis + 8)
-            pygame.draw.circle(surface, (0, 0, 0), circleMiddle, radius)
-            pygame.draw.circle(surface, (0, 0, 0), circleMiddle2, radius)
+            surface.blit(CLAWDIUS_SNAKE, rect)
+        else:
+            pygame.draw.rect(surface, self.color, rect)
 
 
 class Snake:
@@ -135,10 +137,14 @@ def random_snack(snake):
 def redraw_surface(surface, snake, snack):
     surface.fill(SURFACE_COL)
     draw_grid(surface)
+    draw_score(surface, len(snake.body))
     snake.draw(surface)
     snack.draw(surface)
     pygame.display.update()
 
+def draw_score(surface, score):
+    text = STAT_FONT.render("Score: " + str(score), 0, SCORE_COL)
+    surface.blit(text, (WIDTH - 5 - text.get_width(), 0))
 
 def draw_grid(surface):
     square_size = WIDTH // ROWS
@@ -202,7 +208,7 @@ def main():
             snake.add_cube()
             snack = Cube(random_snack(snake), color=SNACK_COL)
 
-        if len(snake.body) == 5:
+        if len(snake.body) == 15:
             won = True
             run = False
 

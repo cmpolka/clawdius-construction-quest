@@ -82,17 +82,16 @@ def main_title_screen():
 
 
 if __name__ == "__main__":
+    print(sys.path)
     # TODO add pygame.init and safety to make sure it runs like get_init
     # https://www.pygame.org/docs/ref/pygame.html#pygame.init 
 
     main_title_screen()
 
     window = pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
-    #window.blit(BASE_IMG, (0, 0))
     minigame_handler = Minigame()
     clawdius = Clawdius(WIN_WIDTH/2 - CLAWD_W/2, WIN_HEIGHT/2 - CLAWD_W/2)
     game_state = [0, 0, 0, 0]   # No buildings constructed yet
-    #png = BASE_IMG       # TODO REPLACE WITH REAL MAP PNG NAMES
     rerender_map = True     # Window may get resized by minigames
 
     pygame.key.set_repeat(10, 60)   # Allow keys to be repeated for movement
