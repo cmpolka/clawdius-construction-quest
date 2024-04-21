@@ -2,7 +2,7 @@ import sys
 import os
 import pygame
 from clawdius import Clawdius
-from minigame import Minigame
+from minigame import *
 from constants import *
      
 
