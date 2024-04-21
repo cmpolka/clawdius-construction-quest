@@ -67,7 +67,7 @@ class Minigame:
         # rect = pygame.Rect((800 - 500)/2, (560 - 500)/2, 500, 500)
 
         # TODO add loading screen
-        return connect4()
+        return connect4.main()
 
     def play_snake(self):
         """Plays the snake minigame. 
