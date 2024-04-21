@@ -23,7 +23,7 @@ class Clawdius:
         # Check Claw's x and y on the map against each of the
         # construction sites. If overlap, press return that site's
         # index, else -1
-        return 0
+        return 1
 
     def move(self):
         pass

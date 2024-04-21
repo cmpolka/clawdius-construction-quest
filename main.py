@@ -130,6 +130,19 @@ if __name__ == "__main__":
                         game_state[minigame] = logic.play(minigame)
                         print("after")
                         png = png_to_render(game_state)
+            elif keys[pygame.K_w]:
+                # Check if Clawdius is at a construction site
+                minigame = clawdius.is_in_building(2, 2)    # TODO change this to clawd's coords
+                # Play the minigame if at site and hasn't won that game before 
+                if minigame > -1:
+                    print(minigame)
+                    if game_state[minigame] != 1:
+                        print(game_state)
+                        print(game_state[minigame])
+                        game_state[minigame] = logic.play(minigame)
+                        print("after")
+                        png = png_to_render(game_state)
+            
         #print("before view")
         update_view(window, png, clawdius)
         #print("after view")

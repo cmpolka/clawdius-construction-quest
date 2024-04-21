@@ -1,6 +1,9 @@
 import pygame
 from games import snake
 from enum import Enum
+import os.path,subprocess
+from subprocess import STDOUT,PIPE
+
 
 
 
@@ -34,6 +37,7 @@ class Logic:
             case Minigames.MONROE.value:
                 # Play minigame 2
                 return self.play_wordle()
+                
             case Minigames.ISC.value:
                 # Play minigame 3
                 pass
@@ -42,7 +46,12 @@ class Logic:
                 pass
 
         return 0
-
+    # edu.wm.cs.cs301.wordle.Wordle
+    def play_wordle(self):
+        print("playing Clawdius' Words")
+        game = compile_java("games/clawdiuswords/src/edu/wm/cs/cs301/wordle/Wordle.java")
+        won = execute_java(game)  # Pass the class name without extension
+        return won
 
     def play_snake(self):
         """Plays the snake minigame. 
@@ -55,6 +64,38 @@ class Logic:
         won = snake.main()
         return won
     
-    def play_wordle(self):
-        print("playing Clawd's ")
-        pass
+def compile_java (java_file):
+    subprocess.run(['javac', java_file])
+
+def execute_java (java_file):
+    cmd=['java', java_file]
+    proc=subprocess.Popen(cmd, stdout = PIPE, stderr = STDOUT)
+    input = subprocess.Popen(cmd, stdin = PIPE)
+    print(proc.stdout.read())
+
+
+# def play_wordle():
+#     print("playing Clawdius' Words")
+#     game = compile_java("C:\\games\clawdiuswords.java")
+#     won = execute_java(game)  # Pass the class name without extension
+#     return won
+
+        # Call the play_wordle function
+        # result = play_wordle()
+        # print('Result:', result)
+    # def compile_java(java_file):
+    #     subprocess.check_call(['javac', java_file])
+
+    # def execute_java(java_file, stdin):
+    #     java_class,ext = os.path.splitext(java_file)
+    #     cmd = ['java', java_class]
+    #     proc = subprocess.Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+    #     stdout,stderr = proc.communicate(stdin)
+    #     print ('This was "' + stdout + '"')
+
+    # def play_wordle(self):
+    #     print("playing Clawdius' Words")
+    #     compile_java('Hi.java')
+    #     execute_java('Hi.java', 'Jon')
+    #     return won
+    
