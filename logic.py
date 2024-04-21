@@ -51,6 +51,5 @@ class Logic:
             True if the user reaches a score of 10, 
             false if the player quits the game.
         """
-        print("playing snake")
         won = snake.main()
         return won
