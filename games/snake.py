@@ -172,7 +172,7 @@ def main():
 
             keys = pygame.key.get_pressed()  # see which keys are being pressed
 
-            if keys[pygame.K_q]:
+            if keys[pygame.K_ESCAPE]:
                 won = False
                 run = False
             elif keys[pygame.K_LEFT]:

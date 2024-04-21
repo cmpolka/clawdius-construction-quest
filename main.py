@@ -1,151 +1,68 @@
 import sys
+import os
 import pygame
 from clawdius import Clawdius
-from logic import Logic
+from minigame import Minigame
+from constants import *
+     
 
-WIN_WIDTH = 800
-WIN_HEIGHT = 560
-
-def check_building(x: int, y: int):
-    """Checks if Clawdius is in any of the construction sites on the map. 
-    
-    Args: 
-        x: Clawdius' x-position on the map (in pixels)
-        y: Clawdius' y-position on the map (in pixels)
-
-    Returns:
-        The construction spot's index in the game state array
-        if in a valid construction site, else returns -1.
-    """
-
-    # Check Claw's x and y on the map against each of the
-    # construction sites. If overlap, press return that site's
-    # index, else -1
-
-
-def png_to_render(state):
-    """ Returns the name of which map png to render based on the game state. 
-
-    Args: 
-        state: game state array [4]
-    
-    Returns:
-        name of png to render
-    """
-
-    # Get int value of game state by treating the values in the
-    # list as a binary string
-    lemon = state[0]
-    isc = state[1] * 2
-    monroe = state[2] * 4
-    yates = state[3] * 8
-
-    png = yates + monroe + isc + lemon
-
-    match png:
-        case 0:     # None
-            #return ("map_none.png")        # TODO add png names
-            pass
-        case 1:     # Lemon 
-            pass
-        case 2:     # ISC
-            pass
-        case 3:     # ISC, Lemon
-            pass
-        case 4:     # Monroe
-            pass
-        case 5:     # Monroe, Lemon
-            pass
-        case 6:     # Monroe, ISC
-            pass
-        case 7:     # Monroe, ISC, Lemon
-            pass
-        case 8:     # Yates
-            pass
-        case 9:     # Yates, Lemon
-            pass
-        case 10:    # Yates, ISC
-            pass
-        case 11:    # Yates, ISC, Lemon
-            pass
-        case 12:    # Yates, Monroe
-            pass
-        case 13:    # Yates, Monroe, Lemon
-            pass
-        case 14:    # Yates, Monroe, ISC
-            pass
-        case 15:    # All
-            pass
-        
-
-def update_view(window, map: str, clawdius: Clawdius):
-    #window.blit(map, (0, 0))
-    # TODO implement
+def update_view(window, rerender_map, clawdius, game_state):
+    if rerender_map:
+        pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
+    window.blit(BASE_IMG, (0, 0))
+    window.blit(YATES,(100,105)) if game_state[0]== 1 else window.blit(RUBBLE,(100,105))
+    window.blit(MONROE,(655,157)) if game_state[1] == 1 else window.blit(RUBBLE,(655,157))
+    window.blit(ISC,(345,397)) if game_state[2] == 1 else window.blit(RUBBLE,(345,397))
+    window.blit(LEMON,(513,465)) if game_state[3] == 1 else window.blit(RUBBLE,(513,465))
     clawdius.draw(window)
+    pygame.display.update()
 
-            
 
 if __name__ == "__main__":
-    #won = play_snake()
-    #print(won)
-    window = pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
-    logic = Logic()
-    clawdius = Clawdius(0, 0, 0, 0)
-    game_state = [0, 0, 0, 0]   # No buildings constructed yet
-    png = "map_none.png"        # TODO REPLACE WITH REAL MAP PNG NAMES
+    print(sys.path)
+    # TODO add pygame.init and safety to make sure it runs like get_init
+    # https://www.pygame.org/docs/ref/pygame.html#pygame.init 
 
+    window = pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
+    minigame_handler = Minigame()
+    clawdius = Clawdius(WIN_WIDTH/2 - CLAWD_W/2, WIN_HEIGHT/2 - CLAWD_W/2)
+    game_state = [0, 0, 0, 0]   # No buildings constructed yet
+    rerender_map = True     # Window may get resized by minigames
+
+    pygame.key.set_repeat(10, 60)   # Allow keys to be repeated for movement
     run = True
     while run:
-        pygame.time.delay(50)   # wait 50ms between each game loop
+        #pygame.time.delay(50)   # wait 50ms between each game loop
 
         for event in pygame.event.get():
-
             keys = pygame.key.get_pressed()
 
             if keys[pygame.K_q] or event.type == pygame.QUIT:
                 run = False
-                pygame.quit()
-                sys.exit()
+                break
             elif keys[pygame.K_LEFT]:
-                # TODO move left
-                pass
+                clawdius.move(Direction.LEFT)
             elif keys[pygame.K_RIGHT]:
-                # TODO move right
-                pass
+                clawdius.move(Direction.RIGHT)
             elif keys[pygame.K_UP]:
-                # TODO move up
-                pass
+                clawdius.move(Direction.UP)
             elif keys[pygame.K_DOWN]:
-                # TODO move down
-                pass
+                clawdius.move(Direction.DOWN)
             elif keys[pygame.K_SPACE]:
                 # Check if Clawdius is at a construction site
-                minigame = clawdius.is_in_building(0, 0)    # TODO change this to clawd's coords
+                minigame = clawdius.is_in_building()    # TODO change this to clawd's coords
                 # Play the minigame if at site and hasn't won that game before 
                 if minigame > -1:
-                    print(minigame)
                     if game_state[minigame] != 1:
-                        print(game_state)
-                        print(game_state[minigame])
-                        game_state[minigame] = logic.play(minigame)
-                        print("after")
-                        png = png_to_render(game_state)
-            elif keys[pygame.K_w]:
-                # Check if Clawdius is at a construction site
-                minigame = clawdius.is_in_building(2, 2)    # TODO change this to clawd's coords
-                # Play the minigame if at site and hasn't won that game before 
-                if minigame > -1:
-                    print(minigame)
-                    if game_state[minigame] != 1:
-                        print(game_state)
-                        print(game_state[minigame])
-                        game_state[minigame] = logic.play(minigame)
-                        print("after")
-                        png = png_to_render(game_state)
-            
-        #print("before view")
-        update_view(window, png, clawdius)
-        #print("after view")
+                        game_state[minigame] = minigame_handler.play(minigame)
+                        # TODO maybe remove if we make games a popup instead of their own window
+                        rerender_map = True
+        
+        update_view(window, rerender_map, clawdius, game_state)
+        rerender_map = False
+    
+    pygame.quit()
+    sys.exit()
 
             
 
