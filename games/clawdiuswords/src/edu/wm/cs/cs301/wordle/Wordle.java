@@ -11,8 +11,10 @@ package edu.wm.cs.cs301.wordle;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import model.WordleModel;
-import view.WordleFrame;
+import edu.wm.cs.cs301.wordle.model.WordleModel;
+import edu.wm.cs.cs301.wordle.view.WordleFrame;
+
+// import view.WordleFrame;
 // import games.clawdiuswords.src.edu.wm.cs.cs301.wordle.view.WordleFrame.java;
 
 public class Wordle implements Runnable {

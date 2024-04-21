@@ -13,11 +13,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 
-import wordle.model.AppColors;
-import wordle.model.WordleModel;
-import wordle.model.WordleResponse;
-import view.AboutDialog;
-import view.WordleFrame;
+import edu.wm.cs.cs301.wordle.model.AppColors;
+import edu.wm.cs.cs301.wordle.model.WordleModel;
+import edu.wm.cs.cs301.wordle.model.WordleResponse;
+import edu.wm.cs.cs301.wordle.view.AboutDialog;
+import edu.wm.cs.cs301.wordle.view.WordleFrame;
 
 public class KeyboardButtonAction extends AbstractAction {
 

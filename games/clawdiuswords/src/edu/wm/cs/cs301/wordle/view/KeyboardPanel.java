@@ -26,10 +26,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-import controller.KeyboardButtonAction;
-import model.AppColors;
-import model.WordleModel;
-import model.WordleResponse;
+import edu.wm.cs.cs301.wordle.controller.KeyboardButtonAction;
+import edu.wm.cs.cs301.wordle.model.AppColors;
+import edu.wm.cs.cs301.wordle.model.WordleModel;
+import edu.wm.cs.cs301.wordle.model.WordleResponse;
 
 public class KeyboardPanel {
 

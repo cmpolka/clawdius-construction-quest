@@ -18,7 +18,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import model.WordleModel;
+import edu.wm.cs.cs301.wordle.model.WordleModel;
 
 public class ReadWordsRunnable implements Runnable {
 

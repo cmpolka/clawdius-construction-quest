@@ -31,7 +31,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-import model.WordleModel;
+import edu.wm.cs.cs301.wordle.model.WordleModel;
 
 public class WordleFrame {
 	
