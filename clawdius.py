@@ -39,7 +39,7 @@ class Clawdius:
         if self.rect.colliderect(lemon):
             return Minigames.LEMON.value
         
-        return -1
+        return 1
 
     def move(self, dir: Direction):
         match dir:

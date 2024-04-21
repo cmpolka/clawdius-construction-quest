@@ -3,6 +3,7 @@ import sys
 sys.path.append("games/flappy_clawd")
 import flappy_clawd
 from games import snake
+from games import connect4
 from enum import Enum
 from constants import *
 
@@ -28,7 +29,7 @@ class Minigame:
                 return self.play_snake()
             case Minigames.MONROE.value:
                 # Play minigame 2
-                pass
+                return self.play_connect4()
             case Minigames.ISC.value:
                 # Play minigame 3
                 return self.play_flappy_clawd()
@@ -54,6 +55,19 @@ class Minigame:
     #     minigame_surface = pygame.Surface((w, h))
     #     minigame_surface.fill((0, 0, 0))
     #     return minigame_surface
+
+    def play_connect4(self):
+        """Plays the snake minigame. 
+        
+        Returns: 
+            True if the user reaches a score of 10, 
+            false if the player quits the game.
+        """
+        # snake_surface = self.create_minigame_surface(500, 500)
+        # rect = pygame.Rect((800 - 500)/2, (560 - 500)/2, 500, 500)
+
+        # TODO add loading screen
+        return gamegui.main()
 
     def play_snake(self):
         """Plays the snake minigame. 
