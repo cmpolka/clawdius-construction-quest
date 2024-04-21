@@ -2,12 +2,12 @@ import sys
 import os
 import pygame
 from clawdius import Clawdius
-from logic import Logic
+from minigame import Minigame
 
 WIN_WIDTH = 800
 WIN_HEIGHT = 560
 
-#BASE_IMG = pygame.image.load(os.path.join("map", "base.png"))
+BASE_IMG = pygame.image.load(os.path.join("map", "base.png"))
 IMGS = {
     0:  pygame.image.load("map/base.png"),
     8: pygame.image.load("map/base.png")    # TODO delete
@@ -70,10 +70,11 @@ def png_to_render(state):
     return IMGS.get(png)
         
 
-def update_view(window, resized, map, clawdius):
-    if resized:
+def update_view(window, rerender_map, map, clawdius):
+    if rerender_map:
         pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
-    window.blit(map, (0, 0))
+        window.blit(BASE_IMG, (0, 0))
+    #window.blit(map, (0, 0))
     # TODO implement
     clawdius.draw(window)
     pygame.display.update()
@@ -81,12 +82,16 @@ def update_view(window, resized, map, clawdius):
             
 
 if __name__ == "__main__":
+    # TODO add pygame.init and safety to make sure it runs like get_init
+    # https://www.pygame.org/docs/ref/pygame.html#pygame.init 
+
     window = pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
-    logic = Logic()
+    window.blit(BASE_IMG, (0, 0))
+    logic = Minigame()
     clawdius = Clawdius(0, 0, 0, 0)
     game_state = [0, 0, 0, 0]   # No buildings constructed yet
     png = IMGS[0]        # TODO REPLACE WITH REAL MAP PNG NAMES
-    resized = False     # Window may get resized by minigames
+    rerender_map = False     # Window may get resized by minigames
 
     run = True
     while run:
@@ -121,10 +126,10 @@ if __name__ == "__main__":
                         game_state[minigame] = logic.play(minigame)
                         png = png_to_render(game_state)
                         # TODO maybe remove if we make games a popup instead of their own window
-                        resized = True
+                        rerender_map = True
         
-        update_view(window, resized, png, clawdius)
-        resized = False
+        update_view(window, rerender_map, png, clawdius)
+        rerender_map = False
 
             
 
