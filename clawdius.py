@@ -8,7 +8,7 @@ class Clawdius:
         self.y = y
         self.rect = pygame.Rect(x, y, CLAWD_W, CLAWD_W)
 
-    def is_in_building(self, x: int, y: int):
+    def is_in_building(self):
         """Checks if Clawdius is in any of the construction sites on the map. 
     
         Args: 
@@ -29,14 +29,17 @@ class Clawdius:
         
         monroe = pygame.Rect(MONROE_COORD,NEW_SIZE)
         if self.rect.colliderect(monroe):
+            print(Minigames.MONROE.value)
             return Minigames.MONROE.value
         
         isc = pygame.Rect(ISC_COORD,NEW_SIZE)
         if self.rect.colliderect(isc):
+            print(Minigames.ISC.value)
             return Minigames.ISC.value
         
         lemon = pygame.Rect(LEMON_COORD,NEW_SIZE)
         if self.rect.colliderect(lemon):
+            print(Minigames.LEMON.value)
             return Minigames.LEMON.value
         
         return -1

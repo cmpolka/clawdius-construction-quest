@@ -24,7 +24,7 @@ if __name__ == "__main__":
 
     window = pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
     #window.blit(BASE_IMG, (0, 0))
-    logic = Minigame()
+    minigame_handler = Minigame()
     clawdius = Clawdius(WIN_WIDTH/2 - CLAWD_W/2, WIN_HEIGHT/2 - CLAWD_W/2)
     game_state = [0, 0, 0, 0]   # No buildings constructed yet
     #png = BASE_IMG       # TODO REPLACE WITH REAL MAP PNG NAMES
@@ -52,11 +52,11 @@ if __name__ == "__main__":
                 clawdius.move(Direction.DOWN)
             elif keys[pygame.K_SPACE]:
                 # Check if Clawdius is at a construction site
-                minigame = clawdius.is_in_building(0, 0)    # TODO change this to clawd's coords
+                minigame = clawdius.is_in_building()    # TODO change this to clawd's coords
                 # Play the minigame if at site and hasn't won that game before 
                 if minigame > -1:
                     if game_state[minigame] != 1:
-                        game_state[minigame] = logic.play(minigame)
+                        game_state[minigame] = minigame_handler.play(minigame)
                         # TODO maybe remove if we make games a popup instead of their own window
                         rerender_map = True
         
