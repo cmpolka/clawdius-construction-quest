@@ -2,7 +2,7 @@ import sys
 import os
 import pygame
 from clawdius import Clawdius
-from logic import Logic
+from minigame import Minigame
 
 WIN_WIDTH = 800
 WIN_HEIGHT = 560
@@ -78,26 +78,30 @@ def png_to_render(state):
     return IMGS.get(png)
         
 
-def update_view(window, resized, BASE_IMG, clawdius,game_state):
-    if resized:
+def update_view(window, rerender_map, clawdius, game_state):
+    if rerender_map:
         pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
-    window.blit(BASE_IMG, (0, 0))
-    pygame.blit(YATES,(100,105)) if game_state[0]== 1 else pygame.blit(RUBBLE,(100,105))
-    pygame.blit(MONROE,(655,157)) if game_state[1] == 1 else pygame.blit(RUBBLE,(655,157))
-    pygame.blit(ISC,(345,397)) if game_state[2] == 1 else pygame.blit(RUBBLE,(345,397))
-    pygame.blit(LEMON,(513,465)) if game_state[3] == 1 else pygame.blit(RUBBLE,(513,465))
+        window.blit(BASE_IMG, (0, 0))
+        window.blit(YATES,(100,105)) if game_state[0]== 1 else window.blit(RUBBLE,(100,105))
+        window.blit(MONROE,(655,157)) if game_state[1] == 1 else window.blit(RUBBLE,(655,157))
+        window.blit(ISC,(345,397)) if game_state[2] == 1 else window.blit(RUBBLE,(345,397))
+        window.blit(LEMON,(513,465)) if game_state[3] == 1 else window.blit(RUBBLE,(513,465))
     clawdius.draw(window)
     pygame.display.update()
 
             
 
 if __name__ == "__main__":
+    # TODO add pygame.init and safety to make sure it runs like get_init
+    # https://www.pygame.org/docs/ref/pygame.html#pygame.init 
+
     window = pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
-    logic = Logic()
+    #window.blit(BASE_IMG, (0, 0))
+    logic = Minigame()
     clawdius = Clawdius(0, 0, 0, 0)
     game_state = [0, 0, 0, 0]   # No buildings constructed yet
-    png = IMGS[0]        # TODO REPLACE WITH REAL MAP PNG NAMES
-    resized = False     # Window may get resized by minigames
+    #png = BASE_IMG       # TODO REPLACE WITH REAL MAP PNG NAMES
+    rerender_map = True     # Window may get resized by minigames
 
     run = True
     while run:
@@ -130,12 +134,12 @@ if __name__ == "__main__":
                 if minigame > -1:
                     if game_state[minigame] != 1:
                         game_state[minigame] = logic.play(minigame)
-                        png = png_to_render(game_state)
+                        #png = png_to_render(game_state)
                         # TODO maybe remove if we make games a popup instead of their own window
-                        resized = True
+                        rerender_map = True
         
-        update_view(window, resized, png, clawdius)
-        resized = False
+        update_view(window, rerender_map, clawdius, game_state)
+        rerender_map = False
 
             
 

@@ -1,4 +1,4 @@
-from logic import Minigames
+from minigame import Minigames
 
 class Clawdius:
     def __init__(self, x: int, y: int, width: int, height: int):
