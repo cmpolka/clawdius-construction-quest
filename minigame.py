@@ -2,7 +2,7 @@ import pygame
 import sys
 sys.path.append("games/flappy_clawd")
 import flappy_clawd
-from games import snake
+from games import snake, simon
 from enum import Enum
 from constants import *
 
@@ -34,7 +34,7 @@ class Minigame:
                 return self.play_flappy_clawd()
             case Minigames.LEMON.value:
                 # Play minigame 4
-                pass
+                return self.play_simon()
 
         return 0
     
@@ -79,4 +79,9 @@ class Minigame:
             false if the player quits the game.
         """
         won = flappy_clawd.main()
+        return won
+    
+
+    def play_simon(self):
+        won = simon.main()
         return won

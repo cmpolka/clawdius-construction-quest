@@ -208,7 +208,7 @@ def main():
             snake.add_cube()
             snack = Cube(random_snack(snake), color=SNACK_COL)
 
-        if len(snake.body) == 15:
+        if len(snake.body) == 5:
             won = True
             run = False
 
