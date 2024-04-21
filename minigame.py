@@ -3,6 +3,7 @@ import sys
 sys.path.append("games/flappy_clawd")
 import flappy_clawd
 from games import snake
+from games import connect4
 from enum import Enum
 from constants import *
 
@@ -28,7 +29,7 @@ class Minigame:
                 return self.play_snake()
             case Minigames.MONROE.value:
                 # Play minigame 2
-                pass
+                return self.play_connect4()
             case Minigames.ISC.value:
                 # Play minigame 3
                 return self.play_flappy_clawd()
@@ -79,4 +80,8 @@ class Minigame:
             false if the player quits the game.
         """
         won = flappy_clawd.main()
+        return won
+    
+    def play_connect4(self):
+        won = connect4.main()
         return won
