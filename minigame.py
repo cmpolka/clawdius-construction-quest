@@ -3,6 +3,7 @@ import sys
 sys.path.append("games/flappy_clawd")
 import flappy_clawd
 from games import snake
+from games import riddle1
 from enum import Enum
 from constants import *
 
@@ -12,6 +13,7 @@ class Minigame:
         pass
 
     def play(self, minigame: int):
+        print("1")
         """Begins the minigame for the building Clawdius is on.
 
         Args: 
@@ -33,8 +35,9 @@ class Minigame:
                 # Play minigame 3
                 return self.play_flappy_clawd()
             case Minigames.LEMON.value:
+                print("this is ", Minigames.LEMON.value)
                 # Play minigame 4
-                pass
+                return self.play_riddle1()
 
         return 0
     
@@ -79,4 +82,9 @@ class Minigame:
             false if the player quits the game.
         """
         won = flappy_clawd.main()
+        return won
+    
+    def play_riddle1(self):
+        print("bye")
+        won = riddle1.main()
         return won

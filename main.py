@@ -36,6 +36,7 @@ if __name__ == "__main__":
 
         for event in pygame.event.get():
             keys = pygame.key.get_pressed()
+            print("here")
 
             if keys[pygame.K_q] or event.type == pygame.QUIT:
                 run = False
@@ -53,7 +54,9 @@ if __name__ == "__main__":
                 minigame = clawdius.is_in_building()    # TODO change this to clawd's coords
                 # Play the minigame if at site and hasn't won that game before 
                 if minigame > -1:
+                    print(minigame)
                     if game_state[minigame] != 1:
+                        print("2")
                         game_state[minigame] = minigame_handler.play(minigame)
                         # TODO maybe remove if we make games a popup instead of their own window
                         rerender_map = True
