@@ -33,7 +33,7 @@ class Logic:
                 return self.play_snake()
             case Minigames.MONROE.value:
                 # Play minigame 2
-                pass
+                return self.play_wordle()
             case Minigames.ISC.value:
                 # Play minigame 3
                 pass
@@ -54,3 +54,7 @@ class Logic:
         print("playing snake")
         won = snake.main()
         return won
+    
+    def play_wordle(self):
+        print("playing Clawd's ")
+        pass

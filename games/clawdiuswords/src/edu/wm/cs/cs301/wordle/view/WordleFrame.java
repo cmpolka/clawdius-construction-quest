@@ -156,7 +156,7 @@ public class WordleFrame {
 		ActionMap actionMap = panel.getActionMap();
 		actionMap.put("cancelAction", new CancelAction());
 		
-		JLabel label = new JLabel("Clawd's Words!");
+		JLabel label = new JLabel("Clawdius' Words!");
 		label.setFont(AppFonts.getTitleFont());
 		panel.add(label);
 		
