@@ -7,6 +7,8 @@ from minigame import Minigame
 WIN_WIDTH = 800
 WIN_HEIGHT = 560
 NEW_SIZE = (76,68)
+CLAWD_WIDTH = 60
+CLAWD_HEIGHT = 60
 
 #Loading in png files and resizing building/rubble icons
 BASE_IMG = pygame.image.load(os.path.join("map", "base.png"))
@@ -15,6 +17,8 @@ MONROE = pygame.transform.scale(pygame.image.load(os.path.join("resources","monr
 ISC = pygame.transform.scale(pygame.image.load(os.path.join("resources","isc.png")),NEW_SIZE)
 LEMON = pygame.transform.scale(pygame.image.load(os.path.join("resources","lemon.png")),NEW_SIZE)
 RUBBLE = pygame.transform.scale(pygame.image.load(os.path.join("resources","rubble.png")),NEW_SIZE)
+
+CLAWDIUS = pygame.image.load(os.path.join("resources", "clawdius_purple.png"))
 
 IMGS = {
     0:  pygame.image.load("map/base.png"),
@@ -98,7 +102,7 @@ if __name__ == "__main__":
     window = pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
     #window.blit(BASE_IMG, (0, 0))
     logic = Minigame()
-    clawdius = Clawdius(0, 0, 0, 0)
+    clawdius = Clawdius(WIN_WIDTH/2 - CLAWD_WIDTH/2, WIN_HEIGHT/2 - CLAWD_HEIGHT/2, CLAWD_WIDTH, CLAWD_HEIGHT)
     game_state = [0, 0, 0, 0]   # No buildings constructed yet
     #png = BASE_IMG       # TODO REPLACE WITH REAL MAP PNG NAMES
     rerender_map = True     # Window may get resized by minigames
@@ -134,7 +138,6 @@ if __name__ == "__main__":
                 if minigame > -1:
                     if game_state[minigame] != 1:
                         game_state[minigame] = logic.play(minigame)
-                        #png = png_to_render(game_state)
                         # TODO maybe remove if we make games a popup instead of their own window
                         rerender_map = True
         

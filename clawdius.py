@@ -1,4 +1,5 @@
 from minigame import Minigames
+import pygame
 
 class Clawdius:
     def __init__(self, x: int, y: int, width: int, height: int):
@@ -7,6 +8,8 @@ class Clawdius:
         self.y = y
         self.WIN_WIDTH = width
         self.WIN_HEIGHT = height
+        self.rect = pygame.Rect(x, y, width, height)
+        self.clawd_surface = pygame.display.
 
     def is_in_building(self, x: int, y: int):
         """Checks if Clawdius is in any of the construction sites on the map. 
@@ -29,4 +32,4 @@ class Clawdius:
         pass
 
     def draw(self, window):
-        pass
+        window.blit(self)
