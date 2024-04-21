@@ -53,22 +53,21 @@ def draw_grid(surface):
     pygame.draw.rect(surface, DARK_PURPLE, get_tile_rect("tr"))
 
 
-def flash(surface, tile):
+def flash(surface, tile, score):
     """Flash tile in grid."""
     tile_rect = get_tile_rect(tile)
     glow, dark = tiles[tile]
-    pygame.draw.rect(surface, glow, tile_rect)
+    surface.fill(glow, tile_rect)
+    draw_text(surface, score)
     pygame.display.update(tile_rect)
-    print("beginning of flash")
     sleep(0.5)
-    pygame.draw.rect(surface, dark, tile_rect)
+    surface.fill(dark, tile_rect)
+    draw_text(surface, score)
     pygame.display.update(tile_rect)
-    print("middle of flash")
     sleep(0.5)
-    print("end of flash")
 
 
-def grow(surface):
+def grow(surface, score):
     """Grow pattern and flash tiles."""
     print(list(tiles))
     tile = choice(list(tiles))
@@ -76,23 +75,21 @@ def grow(surface):
     pattern.append(tile)
 
     for tile in pattern:
-        flash(surface, tile)
+        flash(surface, tile, score)
 
     print('Pattern length:', len(pattern))
     guesses.clear()
 
 
-def tap(surface, tile):
+def tap(surface, tile, score):
     """Respond to screen tap."""
     index = len(guesses)
-
-    print("tapped ", tile)
 
     if tile != pattern[index]:
         return False
 
     guesses.append(tile)
-    flash(surface, tile)
+    flash(surface, tile, score)
 
     return True
 
@@ -102,6 +99,7 @@ def draw_text(surface, score):
 
 def update_view(surface, score):
     """Draw objects on screen."""
+    surface.fill(WHITE)
     draw_grid(surface)
     text = STAT_FONT.render(f"Score: {score}", 1, WHITE)
     surface.blit(text, (SCREEN_W - 5 - text.get_width(), 5))
@@ -114,8 +112,7 @@ def main():
     draw_grid(surface)
     draw_text(surface, score)
     pygame.display.update()
-    #update_view(surface, score)
-    grow(surface)
+    grow(surface, score)
     
     won = False
     run = True
@@ -128,34 +125,30 @@ def main():
             pygame.quit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            print("registered mouse")
             x, y = pygame.mouse.get_pos()
             if x < TILE_W and y < TILE_W:
-                run = tap(surface, "tl")
+                run = tap(surface, "tl", score)
             elif x < TILE_W and y > TILE_W:
-                run = tap(surface, "bl")
+                run = tap(surface, "bl", score)
             elif x > TILE_W and y > TILE_W:
-                run = tap(surface, "br")
+                run = tap(surface, "br", score)
             elif x > TILE_W and y < TILE_W:
-                run = tap(surface, "tr")
-
-        print(pattern, " is pattern")
-        print(guesses, " are guesses")
+                run = tap(surface, "tr", score)
 
         if run == False:
             pattern.clear()
             break
-        elif len(guesses) == 4:
+        elif len(guesses) == 10:
             won = True
-            print("won")
             run = False
             pattern.clear()
             break
         elif len(guesses) == len(pattern):
             score += 1
-            grow(surface)
+            grow(surface, score)
+
+        update_view(surface, score)
         
-        draw_text(surface, score)
     return won
         
     
