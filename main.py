@@ -1,10 +1,13 @@
 import sys
+import os
 import pygame
 from clawdius import Clawdius
 from logic import Logic
 
 WIN_WIDTH = 800
 WIN_HEIGHT = 560
+
+BASE_IMG = pygame.image.load(os.path.join("map", "base.png"))
 
 def check_building(x: int, y: int):
     """Checks if Clawdius is in any of the construction sites on the map. 
@@ -30,7 +33,7 @@ def png_to_render(state):
         state: game state array [4]
     
     Returns:
-        name of png to render
+        png surface to render
     """
 
     # Get int value of game state by treating the values in the
@@ -42,6 +45,7 @@ def png_to_render(state):
 
     png = yates + monroe + isc + lemon
 
+    # make this an array isntead with indeces as img vals
     match png:
         case 0:     # None
             #return ("map_none.png")        # TODO add png names
@@ -61,6 +65,7 @@ def png_to_render(state):
         case 7:     # Monroe, ISC, Lemon
             pass
         case 8:     # Yates
+            return BASE_IMG
             pass
         case 9:     # Yates, Lemon
             pass
@@ -78,21 +83,20 @@ def png_to_render(state):
             pass
         
 
-def update_view(window, map: str, clawdius: Clawdius):
-    #window.blit(map, (0, 0))
+def update_view(window, map, clawdius):
+    window.blit(map, (0, 0))
     # TODO implement
     clawdius.draw(window)
+    pygame.display.update()
 
             
 
 if __name__ == "__main__":
-    #won = play_snake()
-    #print(won)
     window = pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
     logic = Logic()
     clawdius = Clawdius(0, 0, 0, 0)
     game_state = [0, 0, 0, 0]   # No buildings constructed yet
-    png = "map_none.png"        # TODO REPLACE WITH REAL MAP PNG NAMES
+    png = BASE_IMG        # TODO REPLACE WITH REAL MAP PNG NAMES
 
     run = True
     while run:
@@ -128,11 +132,9 @@ if __name__ == "__main__":
                         print(game_state)
                         print(game_state[minigame])
                         game_state[minigame] = logic.play(minigame)
-                        print("after")
                         png = png_to_render(game_state)
-        #print("before view")
+        
         update_view(window, png, clawdius)
-        #print("after view")
 
             
 
