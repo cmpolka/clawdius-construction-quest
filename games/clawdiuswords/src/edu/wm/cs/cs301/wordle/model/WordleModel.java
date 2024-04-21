@@ -18,7 +18,7 @@ import java.util.Random;
 
 import javax.swing.JButton;
 
-import edu.wm.cs.cs301.wordle.controller.ReadWordsRunnable;
+import wordle.controller.ReadWordsRunnable;
 
 public class WordleModel {
 	
