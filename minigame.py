@@ -1,11 +1,13 @@
 import pygame
 import sys
-sys.path.append("games/flappy_clawd")
+from main import * 
+from clawdius import *
 import flappy_clawd
 from games import snake
 from games import connect4
 from enum import Enum
 from constants import *
+
 
 class Minigame:
 
@@ -26,7 +28,7 @@ class Minigame:
         match minigame:
             case Minigames.YATES.value:
                 # Play minigame 1
-                return self.play_snake()
+                return self.minigame_title_screen('Snake Game')
             case Minigames.MONROE.value:
                 # Play minigame 2
                 return self.play_connect4()
@@ -36,25 +38,89 @@ class Minigame:
             case Minigames.LEMON.value:
                 # Play minigame 4
                 pass
-
-        return 0
     
 
     # def minigame_title_screen(self, minigame):
-    #     #minigame = pygame.display.init()
+    #     #screen = pygame.display.init()
     #     rect = pygame.Rect(150, 30, 500, 500)
-    #     minigame = pygame.display.set_mode(size=(800, 560))
+    #     screen = pygame.display.set_mode(size=(800, 560))
     #     print(minigame)
     #     minigame.fill((255, 255, 255), rect)
     #     pygame.display.update()
     #     pygame.time.delay(3000)
     #     return self.play_snake(minigame, rect)
 
-
-    # def create_minigame_surface(self, w, h):
-    #     minigame_surface = pygame.Surface((w, h))
-    #     minigame_surface.fill((0, 0, 0))
-    #     return minigame_surface
+    def minigame_title_screen(self,minigame:str):
+        screen = pygame.display.init()
+        rect = pygame.Rect(150,30,500,500)
+        screen = pygame.display.set_mode(size=(800,560))
+        pygame.display.update()
+            
+            
+        menu_text = minigame
+        font = pygame.font.init()
+        font = pygame.font.SysFont('Helvetica',size = 20)
+        MENU_TEXT = font.render(menu_text, True, (0,0,0))
+        MENU_RECT = MENU_TEXT.get_rect(center=(400,100))
+        
+        screen.blit(MENU_TEXT,MENU_RECT)
+        
+        exit_button_surface = pygame.Surface((150,50))
+        exit_text = font.render("Quit Game",True,(0,0,0))
+        exit_text_rect = exit_text.get_rect(center=(exit_button_surface.get_width()/2,exit_button_surface.get_height()/2))
+        exit_button_rect = pygame.Rect(325,400,150,50)
+        
+        start_button_surface = pygame.Surface((150, 50))
+        start_text = font.render("Start Game",True,(0,0,0))
+        start_text_rect = start_text.get_rect(center=(start_button_surface.get_width()/2,start_button_surface.get_height()/2))
+        
+        start_button_rect = pygame.Rect(325,350,150,50)
+        
+        clock = pygame.time.Clock()
+        
+        won = False
+        run = True
+        while run:
+            clock.tick(60)
+            screen.fill((255,255,255))
+            for event in pygame.event.get():  
+                if event.type == pygame.QUIT:
+                    screen.display.quit()
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if start_button_rect.collidepoint(event.pos):
+                        won = self.play_snake()
+                        if won:
+                            run = False
+                            break
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if exit_button_rect.collidepoint(event.pos):
+                        run = False
+                        break
+            if start_button_rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(start_button_surface, (127, 255, 212), (1, 1, 148, 48))
+            else:
+                pygame.draw.rect(start_button_surface, (0, 0, 0), (0, 0, 150, 50))
+                pygame.draw.rect(start_button_surface, (255, 255, 255), (1, 1, 148, 48))
+                pygame.draw.rect(start_button_surface, (0, 0, 0), (1, 1, 148, 1), 2)
+                pygame.draw.rect(start_button_surface, (0, 100, 0), (1, 48, 148, 10), 2)
+            start_button_surface.blit(start_text,start_text_rect)
+            
+            if exit_button_rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(exit_button_surface, (127, 255, 212), (1, 1, 148, 48))
+            else:
+                pygame.draw.rect(exit_button_surface, (0, 0, 0), (0, 0, 150, 50))
+                pygame.draw.rect(exit_button_surface, (255, 255, 255), (1, 1, 148, 48))
+                pygame.draw.rect(exit_button_surface, (0, 0, 0), (1, 1, 148, 1), 2)
+                pygame.draw.rect(exit_button_surface, (0, 100, 0), (1, 48, 148, 10), 2)
+            exit_button_surface.blit(exit_text,exit_text_rect)
+            
+            screen.blit(start_button_surface,start_button_rect)
+            screen.blit(exit_button_surface,exit_button_rect)
+            screen.blit(MENU_TEXT,MENU_RECT)
+            pygame.display.update()
+        return won
+            
+        
 
     def play_snake(self):
         """Plays the snake minigame. 

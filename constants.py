@@ -29,6 +29,7 @@ ISC = pygame.transform.scale(pygame.image.load(os.path.join("resources","isc.png
 LEMON = pygame.transform.scale(pygame.image.load(os.path.join("resources","lemon.png")),NEW_SIZE)
 RUBBLE = pygame.transform.scale(pygame.image.load(os.path.join("resources","rubble.png")),NEW_SIZE)
 CLAWDIUS = pygame.transform.scale(pygame.image.load(os.path.join("resources", "clawdius_purple.png")), (CLAWD_W, CLAWD_W))
+BACKGROUND = pygame.transform.scale(pygame.image.load(os.path.join("resources", "title_background.png")), (WIN_WIDTH, WIN_HEIGHT))
 
 YATES_COORD = (100,105)
 MONROE_COORD = (655,157)

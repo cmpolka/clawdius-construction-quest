@@ -2,7 +2,7 @@ import sys
 import os
 import pygame
 from clawdius import Clawdius
-from minigame import Minigame
+from minigame import *
 from constants import *
      
 
@@ -17,11 +17,76 @@ def update_view(window, rerender_map, clawdius, game_state):
     clawdius.draw(window)
     pygame.display.update()
 
+def main_title_screen():
+        screen = pygame.display.init()
+        rect = pygame.Rect(150,30,500,500)
+        screen = pygame.display.set_mode(size=(800,560))
+        pygame.display.update()
+            
+        background_rect = pygame.Rect(0, 0, 500, 500)
+        
+        font = pygame.font.init()
+        font = pygame.font.SysFont('Helvetica',size = 20)
+        
+        exit_button_surface = pygame.Surface((150,50))
+        exit_text = font.render("Quit",True,(0,0,0))
+        exit_text_rect = exit_text.get_rect(center=(exit_button_surface.get_width()/2,exit_button_surface.get_height()/2))
+        exit_button_rect = pygame.Rect(325,400,150,50)
+        
+        start_button_surface = pygame.Surface((150, 50))
+        start_text = font.render("Play",True,(0,0,0))
+        start_text_rect = start_text.get_rect(center=(start_button_surface.get_width()/2,start_button_surface.get_height()/2))
+        
+        start_button_rect = pygame.Rect(325,350,150,50)
+        
+        clock = pygame.time.Clock()
+        
+        run = True
+        while run:
+            clock.tick(60)
+            screen.fill((255,255,255))
+            for event in pygame.event.get():  
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if start_button_rect.collidepoint(event.pos):
+                        run = False
+                    if exit_button_rect.collidepoint(event.pos):
+                        pygame.quit()
+                        sys.exit()
+                        break
+            if start_button_rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(start_button_surface, (127, 255, 212), (1, 1, 148, 48))
+            else:
+                pygame.draw.rect(start_button_surface, (0, 0, 0), (0, 0, 150, 50))
+                pygame.draw.rect(start_button_surface, (255, 255, 255), (1, 1, 148, 48))
+                pygame.draw.rect(start_button_surface, (0, 0, 0), (1, 1, 148, 1), 2)
+                pygame.draw.rect(start_button_surface, (0, 100, 0), (1, 48, 148, 10), 2)
+            start_button_surface.blit(start_text,start_text_rect)
+            
+            if exit_button_rect.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(exit_button_surface, (127, 255, 212), (1, 1, 148, 48))
+            else:
+                pygame.draw.rect(exit_button_surface, (0, 0, 0), (0, 0, 150, 50))
+                pygame.draw.rect(exit_button_surface, (255, 255, 255), (1, 1, 148, 48))
+                pygame.draw.rect(exit_button_surface, (0, 0, 0), (1, 1, 148, 1), 2)
+                pygame.draw.rect(exit_button_surface, (0, 100, 0), (1, 48, 148, 10), 2)
+            exit_button_surface.blit(exit_text,exit_text_rect)
+            
+            screen.blit(BACKGROUND, background_rect) 
+            screen.blit(start_button_surface,start_button_rect)
+            screen.blit(exit_button_surface,exit_button_rect)
+            pygame.display.update()
+        return
+
 
 if __name__ == "__main__":
     print(sys.path)
     # TODO add pygame.init and safety to make sure it runs like get_init
     # https://www.pygame.org/docs/ref/pygame.html#pygame.init 
+
+    main_title_screen()
 
     window = pygame.display.set_mode(size=(WIN_WIDTH, WIN_HEIGHT))
     minigame_handler = Minigame()
