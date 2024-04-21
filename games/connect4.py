@@ -4,10 +4,10 @@ import pygame
 import sys
 import math
 
-BLUE = (0,0,255)
-BLACK = (0,0,0)
-RED = (255,0,0)
-YELLOW = (255,255,0)
+BLACK = (255,235,197)
+SAND = (0, 0, 0)
+RED = (227,80,98)
+YELLOW = (138,200,234)
 
 ROW_COUNT = 6
 COLUMN_COUNT = 7
@@ -193,8 +193,8 @@ def pick_best_move(board, piece):
 def draw_board(screen, board, height):
 	for c in range(COLUMN_COUNT):
 		for r in range(ROW_COUNT):
-			pygame.draw.rect(screen, BLUE, (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
-			pygame.draw.circle(screen, BLACK, (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
+			pygame.draw.rect(screen, BLACK, (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
+			pygame.draw.circle(screen, SAND, (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
 	
 	for c in range(COLUMN_COUNT):
 		for r in range(ROW_COUNT):		
@@ -235,7 +235,7 @@ def main():
 				sys.exit()
 
 			if event.type == pygame.MOUSEMOTION:
-				pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
+				pygame.draw.rect(screen, SAND, (0,0, width, SQUARESIZE))
 				posx = event.pos[0]
 				if turn == PLAYER:
 					pygame.draw.circle(screen, RED, (posx, int(SQUARESIZE/2)), RADIUS)
@@ -243,7 +243,7 @@ def main():
 			pygame.display.update()
 
 			if event.type == pygame.MOUSEBUTTONDOWN:
-				pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
+				pygame.draw.rect(screen, SAND, (0,0, width, SQUARESIZE))
 				#print(event.pos)
 				# Ask for Player 1 Input
 				if turn == PLAYER:
